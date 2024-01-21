@@ -1,0 +1,163 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class StackArray:
+    def __init__(self):
+        self.items = []
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        if not self.is_empty():
+            return self.items.pop()
+        else:
+            raise IndexError("pop from an empty stack")
+
+    def peek(self):
+        if not self.is_empty():
+            return self.items[-1]
+        else:
+            raise IndexError("peek from an empty stack")
+
+    def size(self):
+        return len(self.items)
+
+
+class QueueArray:
+    def __init__(self):
+        self.items = []
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def enqueue(self, item):
+        self.items.append(item)
+
+    def dequeue(self):
+        if not self.is_empty():
+            return self.items.pop(0)
+        else:
+            raise IndexError("dequeue from an empty queue")
+
+    def front(self):
+        if not self.is_empty():
+            return self.items[0]
+        else:
+            raise IndexError("front from an empty queue")
+
+    def size(self):
+        return len(self.items)
+
+
+class StackLinkedList:
+    def __init__(self):
+        self.top = None
+
+    def is_empty(self):
+        return self.top is None
+
+    def push(self, item):
+        new_node = Node(item)
+        new_node.next = self.top
+        self.top = new_node
+
+    def pop(self):
+        if not self.is_empty():
+            data = self.top.data
+            self.top = self.top.next
+            return data
+        else:
+            raise IndexError("pop from an empty stack")
+
+    def peek(self):
+        if not self.is_empty():
+            return self.top.data
+        else:
+            raise IndexError("peek from an empty stack")
+
+    def size(self):
+        current = self.top
+        count = 0
+        while current:
+            count += 1
+            current = current.next
+        return count
+
+
+class QueueLinkedList:
+    def __init__(self):
+        self.front = None
+        self.rear = None
+
+    def is_empty(self):
+        return self.front is None
+
+    def enqueue(self, item):
+        new_node = Node(item)
+        if self.rear is None:
+            self.front = self.rear = new_node
+            return
+        self.rear.next = new_node
+        self.rear = new_node
+
+    def dequeue(self):
+        if not self.is_empty():
+            data = self.front.data
+            self.front = self.front.next
+            if self.front is None:
+                self.rear = None
+            return data
+        else:
+            raise IndexError("dequeue from an empty queue")
+
+    def front(self):
+        if not self.is_empty():
+            return self.front.data
+        else:
+            raise IndexError("front from an empty queue")
+
+    def size(self):
+        current = self.front
+        count = 0
+        while current:
+            count += 1
+            current = current.next
+        return count
+
+
+# Example usage:
+
+# Using StackArray
+stack_array = StackArray()
+stack_array.push(1)
+stack_array.push(2)
+stack_array.push(3)
+print("StackArray:", stack_array.pop(), stack_array.pop(), stack_array.pop())
+
+# Using QueueArray
+queue_array = QueueArray()
+queue_array.enqueue(1)
+queue_array.enqueue(2)
+queue_array.enqueue(3)
+print("QueueArray:", queue_array.dequeue(), queue_array.dequeue(), queue_array.dequeue())
+
+# Using StackLinkedList
+stack_linked_list = StackLinkedList()
+stack_linked_list.push(1)
+stack_linked_list.push(2)
+stack_linked_list.push(3)
+print("StackLinkedList:", stack_linked_list.pop(), stack_linked_list.pop(), stack_linked_list.pop())
+
+# Using QueueLinkedList
+queue_linked_list = QueueLinkedList()
+queue_linked_list.enqueue(1)
+queue_linked_list.enqueue(2)
+queue_linked_list.enqueue(3)
+print("QueueLinkedList:", queue_linked_list.dequeue(), queue_linked_list.dequeue(), queue_linked_list.dequeue())
